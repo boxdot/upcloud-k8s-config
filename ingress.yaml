@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gateway
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
+    # nginx.ingress.kubernetes.io/backend-protocol: "HTTP2"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - lb-0a391ca387954957803abd8ea7f0339b-1.upcloudlb.com
+    secretName: ingress-tls-cert
+  rules:
+  - host: lb-0a391ca387954957803abd8ea7f0339b-1.upcloudlb.com
+    http:
+      paths:
+      - path: /helloworld.Greeter
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: helloworld
+            port:
+              number: 80
