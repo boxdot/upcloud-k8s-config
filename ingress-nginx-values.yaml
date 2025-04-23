@@ -11,11 +11,7 @@ controller:
                       "default_backend": "https",
                       "networks": [
                         {
-                          "name": "public-IPv4",
-                          "type": "public"
-                        },
-                        {
-                          "name": "private-IPv4"
+                          "name": "public-IPv4"
                         }
                       ],
                       "tls_configs": [
@@ -35,11 +31,7 @@ controller:
                       "default_backend": "https",
                       "networks": [
                         {
-                          "name": "public-IPv4",
-                          "type": "public"
-                        },
-                        {
-                          "name": "private-IPv4"
+                          "name": "public-IPv4"
                         }
                       ],
                       "tls_configs": [
