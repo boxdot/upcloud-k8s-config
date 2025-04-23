@@ -1,25 +1,44 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: gateway
+  name: phnx-ingress
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
     nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
     nginx.ingress.kubernetes.io/proxy-body-size: "10m"
 spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - lb-0a391ca387954957803abd8ea7f0339b-1.upcloudlb.com
-    secretName: ingress-tls-cert
+    - dev.phnx.im
   rules:
-  - host: lb-0a391ca387954957803abd8ea7f0339b-1.upcloudlb.com
+  - host: dev.phnx.im
     http:
       paths:
-      - path: /helloworld.Greeter
+      - path: /delivery_service.v1.DeliveryService
         pathType: ImplementationSpecific
         backend:
           service:
-            name: helloworld
+            name: phnx-backend
+            port:
+              number: 50051
+      - path: /queue_service.v1.QueueService
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: phnx-backend
+            port:
+              number: 50051
+      - path: /auth_service.v1.AuthService
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: phnx-backend
+            port:
+              number: 50051
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: phnx-backend
             port:
               number: 80
