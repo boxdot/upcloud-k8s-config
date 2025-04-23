@@ -6,9 +6,9 @@ controller:
                   "frontends": [
                     {
                       "name": "https",
-                      "mode": "tcp",
+                      "mode": "http",
                       "port": 443,
-                      "default_backend": "https",
+                      "default_backend": "http",
                       "networks": [
                         {
                           "name": "public-IPv4"
@@ -21,12 +21,12 @@ controller:
                         }
                       ],
                       "properties": {
-                        "http2_enabled": true
+                        "http2_enabled": false
                       }
                     },
                     {
                       "name": "grpc",
-                      "mode": "tcp",
+                      "mode": "http",
                       "port": 50051,
                       "default_backend": "https",
                       "networks": [
@@ -46,6 +46,14 @@ controller:
                     }
                   ],
                   "backends": [
+                    {
+                      "name": "http",
+                      "properties": {
+                        "outbound_proxy_protocol": "v2",
+                        "http2_enabled": false,
+                        "tls_enabled": true
+                      }
+                    },
                     {
                       "name": "https",
                       "properties": {
