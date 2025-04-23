@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: phnx-ingress
+  name: phnx-ingress-grpc
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
     nginx.ingress.kubernetes.io/proxy-body-size: "10m"
@@ -35,10 +35,3 @@ spec:
             name: phnx-backend
             port:
               number: 50051
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: phnx-backend
-            port:
-              number: 80
